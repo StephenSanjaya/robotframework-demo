@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.2 (Python 3.7.6 on win32)" generated="20210315 21:35:05.439" rpa="false">
+<suite id="s1" name="009 Invalid Login Db" source="C:\Users\Stephen Sanjaya\Desktop\SauceDemo\Testing_Saucedemo\009_invalid_login_db.robot">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Connect To Database</arg>
+<arg>pymysql</arg>
+<arg>${db_name}</arg>
+<arg>${db_user}</arg>
+<arg>${db_pasword}</arg>
+<arg>${db_host}</arg>
+<arg>${db_port}</arg>
+<arg>AND</arg>
+<arg>Fetch Data</arg>
+<arg>AND</arg>
+<arg>Row Count In Users Table</arg>
+</arguments>
+<kw name="Connect To Database" library="DatabaseLibrary">
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using `dbName`, `dbUsername`, and `dbPassword`.</doc>
+<arguments>
+<arg>pymysql</arg>
+<arg>${db_name}</arg>
+<arg>${db_user}</arg>
+<arg>${db_pasword}</arg>
+<arg>${db_host}</arg>
+<arg>${db_port}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:05.709" level="INFO">Connecting using : pymysql.connect(db=db_test, user=root, passwd=, host=127.0.0.1, port=3306, charset=None) </msg>
+<status status="PASS" starttime="20210315 21:35:05.690" endtime="20210315 21:35:05.714"></status>
+</kw>
+<kw name="Fetch Data">
+<kw name="Query" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<arguments>
+<arg>select username, password, error from users</arg>
+</arguments>
+<assign>
+<var>${queryResults}</var>
+</assign>
+<msg timestamp="20210315 21:35:05.715" level="INFO">Executing : Query  |  select username, password, error from users </msg>
+<msg timestamp="20210315 21:35:05.716" level="INFO">${queryResults} = (('locked_out_user', 'secret_sauce', 'Epic sadface: Sorry, this user has been locked out.'), ('standard_user', '', 'Epic sadface: Password is required'), ('', 'secret_sauce', 'Epic sadface: Username i...</msg>
+<status status="PASS" starttime="20210315 21:35:05.715" endtime="20210315 21:35:05.716"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${queryResults}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:05.716" level="INFO">${queryResults} = (('locked_out_user', 'secret_sauce', 'Epic sadface: Sorry, this user has been locked out.'), ('standard_user', '', 'Epic sadface: Password is required'), ('', 'secret_sauce', 'Epic sadface: Username i...</msg>
+<status status="PASS" starttime="20210315 21:35:05.716" endtime="20210315 21:35:05.716"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.714" endtime="20210315 21:35:05.716"></status>
+</kw>
+<kw name="Row Count In Users Table">
+<kw name="Row Count" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query the database and returns the number of rows from the query. Set
+optional input `sansTran` to True to run command without an explicit transaction commit or rollback.</doc>
+<arguments>
+<arg>select * from users</arg>
+</arguments>
+<assign>
+<var>${length}</var>
+</assign>
+<msg timestamp="20210315 21:35:05.717" level="INFO">Executing : Row Count  |  select * from users </msg>
+<msg timestamp="20210315 21:35:05.717" level="INFO">${length} = 3</msg>
+<status status="PASS" starttime="20210315 21:35:05.717" endtime="20210315 21:35:05.717"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${length}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:05.718" level="INFO">${length} = 3</msg>
+<status status="PASS" starttime="20210315 21:35:05.718" endtime="20210315 21:35:05.718"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.716" endtime="20210315 21:35:05.718"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.690" endtime="20210315 21:35:05.718"></status>
+</kw>
+<test id="s1-t1" name="Verify Login Fails">
+<kw name="${i} IN RANGE [ ${length} ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Open Saucedemo Website" library="001_resource">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:05.720" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20210315 21:35:05.720" endtime="20210315 21:35:09.754"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20210315 21:35:09.754" endtime="20210315 21:35:09.870"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.720" endtime="20210315 21:35:09.870"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Login Template</arg>
+<arg>${queryResults[${i}][0]}</arg>
+<arg>${queryResults[${i}][1]}</arg>
+<arg>${queryResults[${i}][2]}</arg>
+</arguments>
+<kw name="Login Template">
+<arguments>
+<arg>${queryResults[${i}][0]}</arg>
+<arg>${queryResults[${i}][1]}</arg>
+<arg>${queryResults[${i}][2]}</arg>
+</arguments>
+<kw name="Input Username" library="001_resource">
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="user-name"]</arg>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:09.872" level="INFO">Typing text 'locked_out_user' into text field '//*[@id="user-name"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:09.872" endtime="20210315 21:35:09.985"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:09.871" endtime="20210315 21:35:09.985"></status>
+</kw>
+<kw name="Input Password" library="001_resource">
+<arguments>
+<arg>${password}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="password"]</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:09.986" level="INFO">Typing text 'secret_sauce' into text field '//*[@id="password"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:09.986" endtime="20210315 21:35:10.189"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:09.985" endtime="20210315 21:35:10.189"></status>
+</kw>
+<kw name="Click Login Button" library="001_resource">
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login-button"]</arg>
+</arguments>
+<msg timestamp="20210315 21:35:10.190" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:10.190" endtime="20210315 21:35:10.248"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:10.189" endtime="20210315 21:35:10.249"></status>
+</kw>
+<kw name="Login Should Fail">
+<arguments>
+<arg>${error}</arg>
+</arguments>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login_button_container"]/div/form/h3</arg>
+</arguments>
+<assign>
+<var>${text}</var>
+</assign>
+<msg timestamp="20210315 21:35:10.275" level="INFO">${text} = Epic sadface: Sorry, this user has been locked out.</msg>
+<status status="PASS" starttime="20210315 21:35:10.249" endtime="20210315 21:35:10.275"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${msg}</arg>
+<arg>${text}</arg>
+</arguments>
+<status status="PASS" starttime="20210315 21:35:10.275" endtime="20210315 21:35:10.275"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:10.249" endtime="20210315 21:35:10.275"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:09.870" endtime="20210315 21:35:10.275"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:09.870" endtime="20210315 21:35:10.276"></status>
+</kw>
+<kw name="Sleep Saucedemo Website">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0</arg>
+</arguments>
+<msg timestamp="20210315 21:35:10.276" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20210315 21:35:10.276" endtime="20210315 21:35:10.276"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:10.276" endtime="20210315 21:35:10.276"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20210315 21:35:10.276" endtime="20210315 21:35:12.746"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.720" endtime="20210315 21:35:12.746"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Open Saucedemo Website" library="001_resource">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:12.748" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20210315 21:35:12.747" endtime="20210315 21:35:16.630"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20210315 21:35:16.630" endtime="20210315 21:35:16.745"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:12.747" endtime="20210315 21:35:16.745"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Login Template</arg>
+<arg>${queryResults[${i}][0]}</arg>
+<arg>${queryResults[${i}][1]}</arg>
+<arg>${queryResults[${i}][2]}</arg>
+</arguments>
+<kw name="Login Template">
+<arguments>
+<arg>${queryResults[${i}][0]}</arg>
+<arg>${queryResults[${i}][1]}</arg>
+<arg>${queryResults[${i}][2]}</arg>
+</arguments>
+<kw name="Input Username" library="001_resource">
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="user-name"]</arg>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:16.747" level="INFO">Typing text 'standard_user' into text field '//*[@id="user-name"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:16.747" endtime="20210315 21:35:16.851"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:16.747" endtime="20210315 21:35:16.852"></status>
+</kw>
+<kw name="Input Password" library="001_resource">
+<arguments>
+<arg>${password}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="password"]</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:16.852" level="INFO">Typing text '' into text field '//*[@id="password"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:16.852" endtime="20210315 21:35:16.926"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:16.852" endtime="20210315 21:35:16.926"></status>
+</kw>
+<kw name="Click Login Button" library="001_resource">
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login-button"]</arg>
+</arguments>
+<msg timestamp="20210315 21:35:16.927" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:16.926" endtime="20210315 21:35:16.984"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:16.926" endtime="20210315 21:35:16.985"></status>
+</kw>
+<kw name="Login Should Fail">
+<arguments>
+<arg>${error}</arg>
+</arguments>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login_button_container"]/div/form/h3</arg>
+</arguments>
+<assign>
+<var>${text}</var>
+</assign>
+<msg timestamp="20210315 21:35:17.009" level="INFO">${text} = Epic sadface: Password is required</msg>
+<status status="PASS" starttime="20210315 21:35:16.985" endtime="20210315 21:35:17.009"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${msg}</arg>
+<arg>${text}</arg>
+</arguments>
+<status status="PASS" starttime="20210315 21:35:17.009" endtime="20210315 21:35:17.010"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:16.985" endtime="20210315 21:35:17.010"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:16.746" endtime="20210315 21:35:17.010"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:16.746" endtime="20210315 21:35:17.010"></status>
+</kw>
+<kw name="Sleep Saucedemo Website">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0</arg>
+</arguments>
+<msg timestamp="20210315 21:35:17.011" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20210315 21:35:17.011" endtime="20210315 21:35:17.011"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:17.010" endtime="20210315 21:35:17.011"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20210315 21:35:17.011" endtime="20210315 21:35:19.145"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:12.746" endtime="20210315 21:35:19.145"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Open Saucedemo Website" library="001_resource">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:19.146" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20210315 21:35:19.146" endtime="20210315 21:35:22.928"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20210315 21:35:22.928" endtime="20210315 21:35:23.047"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:19.146" endtime="20210315 21:35:23.048"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Login Template</arg>
+<arg>${queryResults[${i}][0]}</arg>
+<arg>${queryResults[${i}][1]}</arg>
+<arg>${queryResults[${i}][2]}</arg>
+</arguments>
+<kw name="Login Template">
+<arguments>
+<arg>${queryResults[${i}][0]}</arg>
+<arg>${queryResults[${i}][1]}</arg>
+<arg>${queryResults[${i}][2]}</arg>
+</arguments>
+<kw name="Input Username" library="001_resource">
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="user-name"]</arg>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:23.055" level="INFO">Typing text '' into text field '//*[@id="user-name"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:23.054" endtime="20210315 21:35:23.148"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.052" endtime="20210315 21:35:23.149"></status>
+</kw>
+<kw name="Input Password" library="001_resource">
+<arguments>
+<arg>${password}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="password"]</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20210315 21:35:23.149" level="INFO">Typing text 'secret_sauce' into text field '//*[@id="password"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:23.149" endtime="20210315 21:35:23.242"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.149" endtime="20210315 21:35:23.242"></status>
+</kw>
+<kw name="Click Login Button" library="001_resource">
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login-button"]</arg>
+</arguments>
+<msg timestamp="20210315 21:35:23.243" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
+<status status="PASS" starttime="20210315 21:35:23.243" endtime="20210315 21:35:23.300"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.242" endtime="20210315 21:35:23.300"></status>
+</kw>
+<kw name="Login Should Fail">
+<arguments>
+<arg>${error}</arg>
+</arguments>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login_button_container"]/div/form/h3</arg>
+</arguments>
+<assign>
+<var>${text}</var>
+</assign>
+<msg timestamp="20210315 21:35:23.324" level="INFO">${text} = Epic sadface: Username is required</msg>
+<status status="PASS" starttime="20210315 21:35:23.300" endtime="20210315 21:35:23.324"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${msg}</arg>
+<arg>${text}</arg>
+</arguments>
+<status status="PASS" starttime="20210315 21:35:23.324" endtime="20210315 21:35:23.325"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.300" endtime="20210315 21:35:23.325"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.049" endtime="20210315 21:35:23.325"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.048" endtime="20210315 21:35:23.325"></status>
+</kw>
+<kw name="Sleep Saucedemo Website">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0</arg>
+</arguments>
+<msg timestamp="20210315 21:35:23.326" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20210315 21:35:23.325" endtime="20210315 21:35:23.326"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:23.325" endtime="20210315 21:35:23.326"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20210315 21:35:23.326" endtime="20210315 21:35:25.466"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:19.145" endtime="20210315 21:35:25.466"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.719" endtime="20210315 21:35:25.466"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.718" endtime="20210315 21:35:25.468" critical="yes"></status>
+</test>
+<kw name="Disconnect From Database" library="DatabaseLibrary" type="teardown">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20210315 21:35:25.476" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20210315 21:35:25.476" endtime="20210315 21:35:25.476"></status>
+</kw>
+<status status="PASS" starttime="20210315 21:35:05.441" endtime="20210315 21:35:25.476"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" id="s1" name="009 Invalid Login Db">009 Invalid Login Db</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
