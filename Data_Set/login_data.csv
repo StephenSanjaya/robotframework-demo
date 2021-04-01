@@ -3,6 +3,6 @@ locked_out_user;${VALID_PASSWORD};Epic sadface: Sorry, this user has been locked
 ${EMPTY};${VALID_PASSWORD};Epic sadface: Username is required;
 ${VALID_USERNAME};${EMPTY};Epic sadface: Password is required;
 ${VALID_USERNAME};${EMPTY};Epic sadface: Password is required;
-invalid;invalid;Epic sadface: Username and password do not match any user in this servic;
-invalid;${VALID_PASSWORD};Epic sadface: Username and password do not match any user in this servic;
-${VALID_USERNAME};invalid;Epic sadface: Username and password do not match any user in this servic;
+invalid;invalid;Epic sadface: Username and password do not match any user in this service;
+invalid;${VALID_PASSWORD};Epic sadface: Username and password do not match any user in this service;
+${VALID_USERNAME};invalid;Epic sadface: Username and password do not match any user in this service;

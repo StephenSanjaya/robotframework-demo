@@ -17,7 +17,7 @@ ${db_port}          3306
 #     Create Users Table
 #     Insert Multiple Data Into Users Table
 
-Verify Login Fails
+Check Login For Invalid Crendential From Database
     FOR    ${i}    IN RANGE     ${lengthOfData}
             Open Saucedemo Website
             Run Keyword And Continue On Failure
@@ -52,5 +52,5 @@ Login Template
 
 Login Should Fail
     [Arguments]     ${msg}    
-    ${text}=            Get Text    //*[@id="login_button_container"]/div/form/h3
+    ${text}=            Get Text    //*[@id="login_button_container"]/div/form/div[3]/h3
     Should Be Equal     ${msg}      ${text}
