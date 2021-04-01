@@ -34,16 +34,16 @@ Inventory Page Should Be Open
     Element Should Be Visible       //*[@id="inventory_container"]/div/div[1]/div[1]
 
 Filter From Higher Price To Low
-    Select From List By Value      //*[@id="inventory_filter_container"]/Select   hilo
+    Select From List By Value      //*[@id="header_container"]/div[2]/div[2]/span/select   hilo
 
 Click Add To Cart Button
-    Click Button            //*[@id="inventory_container"]/div/div[1]/div[3]/button
+    Click Button            //*[@id="add-to-cart-sauce-labs-fleece-jacket"]
 
 Click Cart Icon
     Click Element           //*[@id="shopping_cart_container"]/a
 
 Click Checkout Button
-    Click Element            //*[@id="cart_contents_container"]/div/div[2]/a[2]
+    Click Element            //*[@id="checkout"]
 
 Input First Name
     [Arguments]     ${first_name}
@@ -61,7 +61,7 @@ Click Continue To Purchase item
     Click Button        //*[@id="checkout_info_container"]/div/form/div[2]/input
 
 CLick Finish Button
-    Click Element       //*[@id="checkout_summary_container"]/div/div[2]/div[8]/a[2]
+    Click Element       //*[@id="finish"]
 
 Checkout Complete Page Should Be Open
     Location Should Be      https://www.saucedemo.com/checkout-complete.html
