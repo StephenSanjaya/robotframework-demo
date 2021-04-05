@@ -1,8 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.7.6 on win32)" generated="20210401 16:51:58.196" rpa="false">
+<robot generator="Robot 3.2.2 (Python 3.7.6 on win32)" generated="20210405 17:11:53.675" rpa="false">
 <suite id="s1" name="Testing Saucedemo" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo">
-<suite id="s1-s1" name="003 Valid Login" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\003_valid_login.robot">
-<test id="s1-s1-t1" name="Check Login for valid Crendential">
+<suite id="s1-s1" name="002.1 Invalid Login Json" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\002.1_invalid_login_json.robot">
+<kw name="Json File" type="setup">
+<kw name="Load JSON From File" library="JSONLibrary">
+<doc>Load JSON from file.</doc>
+<arguments>
+<arg>./Data_Set/users.json</arg>
+</arguments>
+<assign>
+<var>${json_obj}</var>
+</assign>
+<msg timestamp="20210405 17:11:54.005" level="INFO">${json_obj} = {'users': [{'username': 'locked_out_user', 'password': 'secret_sauce', 'error': 'Epic sadface: Sorry, this user has been locked out.'}, {'username': 'standard_user', 'password': '', 'error': 'Epic sad...</msg>
+<status status="PASS" starttime="20210405 17:11:54.004" endtime="20210405 17:11:54.005"></status>
+</kw>
+<kw name="Convert JSON To String" library="JSONLibrary">
+<doc>Convert JSON object to string</doc>
+<arguments>
+<arg>${json_obj}</arg>
+</arguments>
+<assign>
+<var>${json_str}</var>
+</assign>
+<msg timestamp="20210405 17:11:54.005" level="INFO">${json_str} = {"users": [{"username": "locked_out_user", "password": "secret_sauce", "error": "Epic sadface: Sorry, this user has been locked out."}, {"username": "standard_user", "password": "", "error": "Epic sad...</msg>
+<status status="PASS" starttime="20210405 17:11:54.005" endtime="20210405 17:11:54.005"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>json.loads('''${json_str}''')</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${data}</var>
+</assign>
+<msg timestamp="20210405 17:11:54.006" level="INFO">${data} = {'users': [{'username': 'locked_out_user', 'password': 'secret_sauce', 'error': 'Epic sadface: Sorry, this user has been locked out.'}, {'username': 'standard_user', 'password': '', 'error': 'Epic sad...</msg>
+<status status="PASS" starttime="20210405 17:11:54.006" endtime="20210405 17:11:54.006"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${data["users"]}</arg>
+</arguments>
+<assign>
+<var>${lengthOfData}</var>
+</assign>
+<msg timestamp="20210405 17:11:54.006" level="INFO">Length is 3</msg>
+<msg timestamp="20210405 17:11:54.006" level="INFO">${lengthOfData} = 3</msg>
+<status status="PASS" starttime="20210405 17:11:54.006" endtime="20210405 17:11:54.006"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${data}</arg>
+</arguments>
+<msg timestamp="20210405 17:11:54.007" level="INFO">${data} = {'users': [{'username': 'locked_out_user', 'password': 'secret_sauce', 'error': 'Epic sadface: Sorry, this user has been locked out.'}, {'username': 'standard_user', 'password': '', 'error': 'Epic sad...</msg>
+<status status="PASS" starttime="20210405 17:11:54.006" endtime="20210405 17:11:54.007"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${lengthOfData}</arg>
+</arguments>
+<msg timestamp="20210405 17:11:54.007" level="INFO">${lengthOfData} = 3</msg>
+<status status="PASS" starttime="20210405 17:11:54.007" endtime="20210405 17:11:54.007"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:11:54.004" endtime="20210405 17:11:54.007"></status>
+</kw>
+<test id="s1-s1-t1" name="Check Login For Invalid Crendential From Json File">
+<kw name="${i} IN RANGE [ ${lengthOfData} ]" type="for">
+<kw name="${i} = 0" type="foritem">
 <kw name="Open Saucedemo Website" library="001_resource">
 <kw name="Open Browser" library="SeleniumLibrary">
 <doc>Opens a new browser instance to the optional ``url``.</doc>
@@ -10,18 +77,32 @@
 <arg>${URL}</arg>
 <arg>${BROWSER}</arg>
 </arguments>
-<msg timestamp="20210401 16:51:58.433" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
-<status status="PASS" starttime="20210401 16:51:58.433" endtime="20210401 16:52:03.825"></status>
+<msg timestamp="20210405 17:11:54.009" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20210405 17:11:54.008" endtime="20210405 17:11:58.256"></status>
 </kw>
 <kw name="Maximize Browser Window" library="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20210401 16:52:03.825" endtime="20210401 16:52:03.953"></status>
+<status status="PASS" starttime="20210405 17:11:58.256" endtime="20210405 17:11:58.379"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:51:58.433" endtime="20210401 16:52:03.953"></status>
+<status status="PASS" starttime="20210405 17:11:54.008" endtime="20210405 17:11:58.379"></status>
 </kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Login Template</arg>
+<arg>${data["users"][${i}]["username"]}</arg>
+<arg>${data["users"][${i}]["password"]}</arg>
+<arg>${data["users"][${i}]["error"]}</arg>
+</arguments>
+<kw name="Login Template">
+<arguments>
+<arg>${data["users"][${i}]["username"]}</arg>
+<arg>${data["users"][${i}]["password"]}</arg>
+<arg>${data["users"][${i}]["error"]}</arg>
+</arguments>
 <kw name="Input Username" library="001_resource">
 <arguments>
-<arg>${VALID_USERNAME}</arg>
+<arg>${username}</arg>
 </arguments>
 <kw name="Input Text" library="SeleniumLibrary">
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
@@ -29,14 +110,14 @@
 <arg>//*[@id="user-name"]</arg>
 <arg>${username}</arg>
 </arguments>
-<msg timestamp="20210401 16:52:03.955" level="INFO">Typing text 'standard_user' into text field '//*[@id="user-name"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:03.954" endtime="20210401 16:52:04.068"></status>
+<msg timestamp="20210405 17:11:58.386" level="INFO">Typing text 'locked_out_user' into text field '//*[@id="user-name"]'.</msg>
+<status status="PASS" starttime="20210405 17:11:58.385" endtime="20210405 17:11:58.495"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:03.954" endtime="20210401 16:52:04.069"></status>
+<status status="PASS" starttime="20210405 17:11:58.384" endtime="20210405 17:11:58.495"></status>
 </kw>
 <kw name="Input Password" library="001_resource">
 <arguments>
-<arg>${VALID_PASSWORD}</arg>
+<arg>${password}</arg>
 </arguments>
 <kw name="Input Text" library="SeleniumLibrary">
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
@@ -44,10 +125,10 @@
 <arg>//*[@id="password"]</arg>
 <arg>${password}</arg>
 </arguments>
-<msg timestamp="20210401 16:52:04.070" level="INFO">Typing text 'secret_sauce' into text field '//*[@id="password"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.070" endtime="20210401 16:52:04.165"></status>
+<msg timestamp="20210405 17:11:58.496" level="INFO">Typing text 'secret_sauce' into text field '//*[@id="password"]'.</msg>
+<status status="PASS" starttime="20210405 17:11:58.496" endtime="20210405 17:11:58.580"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:04.069" endtime="20210401 16:52:04.165"></status>
+<status status="PASS" starttime="20210405 17:11:58.496" endtime="20210405 17:11:58.580"></status>
 </kw>
 <kw name="Click Login Button" library="001_resource">
 <kw name="Click Button" library="SeleniumLibrary">
@@ -55,235 +136,484 @@
 <arguments>
 <arg>//*[@id="login-button"]</arg>
 </arguments>
-<msg timestamp="20210401 16:52:04.166" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.166" endtime="20210401 16:52:04.265"></status>
+<msg timestamp="20210405 17:11:58.581" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
+<status status="PASS" starttime="20210405 17:11:58.581" endtime="20210405 17:11:58.639"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:04.166" endtime="20210401 16:52:04.266"></status>
+<status status="PASS" starttime="20210405 17:11:58.580" endtime="20210405 17:11:58.639"></status>
 </kw>
-<kw name="Inventory Page Should Be Open" library="001_resource">
-<kw name="Location Should Be" library="SeleniumLibrary">
-<doc>Verifies that the current URL is exactly ``url``.</doc>
+<kw name="Login Should Fail">
 <arguments>
-<arg>${INVENTORY PAGE}</arg>
+<arg>${error}</arg>
 </arguments>
-<msg timestamp="20210401 16:52:04.272" level="INFO">Current location is 'https://www.saucedemo.com/inventory.html'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.267" endtime="20210401 16:52:04.272"></status>
-</kw>
-<kw name="Element Should Be Visible" library="SeleniumLibrary">
-<doc>Verifies that the element identified by ``locator`` is visible.</doc>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of the element identified by ``locator``.</doc>
 <arguments>
-<arg>//*[@id="inventory_container"]/div/div[1]/div[1]</arg>
+<arg>//*[@id="login_button_container"]/div/form/div[3]/h3</arg>
 </arguments>
-<msg timestamp="20210401 16:52:04.300" level="INFO">Element '//*[@id="inventory_container"]/div/div[1]/div[1]' is displayed.</msg>
-<status status="PASS" starttime="20210401 16:52:04.272" endtime="20210401 16:52:04.300"></status>
+<assign>
+<var>${text}</var>
+</assign>
+<msg timestamp="20210405 17:11:58.662" level="INFO">${text} = Epic sadface: Sorry, this user has been locked out.</msg>
+<status status="PASS" starttime="20210405 17:11:58.640" endtime="20210405 17:11:58.662"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:04.266" endtime="20210401 16:52:04.301"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:51:58.432" endtime="20210401 16:52:04.301" critical="yes"></status>
-</test>
-<doc>verify login in saucedemo website</doc>
-<status status="PASS" starttime="20210401 16:51:58.223" endtime="20210401 16:52:04.304"></status>
-</suite>
-<suite id="s1-s2" name="004 Order Item" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\004_order_item.robot">
-<test id="s1-s2-t1" name="Adding The Most Expensive item To Cart">
-<kw name="Filter From Higher Price To Low" library="001_resource">
-<kw name="Select From List By Value" library="SeleniumLibrary">
-<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
 <arguments>
-<arg>//*[@id="header_container"]/div[2]/div[2]/span/select</arg>
-<arg>hilo</arg>
+<arg>${msg}</arg>
+<arg>${text}</arg>
 </arguments>
-<msg timestamp="20210401 16:52:04.321" level="INFO">Selecting options from selection list '//*[@id="header_container"]/div[2]/div[2]/span/select' by value hilo.</msg>
-<status status="PASS" starttime="20210401 16:52:04.321" endtime="20210401 16:52:04.421"></status>
+<status status="PASS" starttime="20210405 17:11:58.662" endtime="20210405 17:11:58.662"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:04.321" endtime="20210401 16:52:04.421"></status>
+<status status="PASS" starttime="20210405 17:11:58.639" endtime="20210405 17:11:58.663"></status>
 </kw>
-<kw name="Click Add To Cart Button" library="001_resource">
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" starttime="20210405 17:11:58.381" endtime="20210405 17:11:58.663"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:11:58.380" endtime="20210405 17:11:58.663"></status>
+</kw>
+<kw name="Sleep Saucedemo Website">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
 <arguments>
-<arg>//*[@id="add-to-cart-sauce-labs-fleece-jacket"]</arg>
+<arg>1s</arg>
 </arguments>
-<msg timestamp="20210401 16:52:04.423" level="INFO">Clicking button '//*[@id="add-to-cart-sauce-labs-fleece-jacket"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.423" endtime="20210401 16:52:04.479"></status>
+<msg timestamp="20210405 17:11:59.674" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20210405 17:11:58.663" endtime="20210405 17:11:59.674"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:04.422" endtime="20210401 16:52:04.479"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.320" endtime="20210401 16:52:04.480" critical="yes"></status>
-</test>
-<test id="s1-s2-t2" name="Checkout Cart">
-<kw name="Click Cart Icon" library="001_resource">
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="shopping_cart_container"]/a</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.482" level="INFO">Clicking element '//*[@id="shopping_cart_container"]/a'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.482" endtime="20210401 16:52:04.542"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.481" endtime="20210401 16:52:04.542"></status>
-</kw>
-<kw name="Click Checkout Button" library="001_resource">
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="checkout"]</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.544" level="INFO">Clicking element '//*[@id="checkout"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.544" endtime="20210401 16:52:04.607"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.543" endtime="20210401 16:52:04.608"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.481" endtime="20210401 16:52:04.609" critical="yes"></status>
-</test>
-<test id="s1-s2-t3" name="Input Valid Information">
-<kw name="Input First Name" library="001_resource">
-<arguments>
-<arg>${FIRST NAME}</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="first-name"]</arg>
-<arg>${first_name}</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.614" level="INFO">Typing text 'Stephen' into text field '//*[@id="first-name"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.613" endtime="20210401 16:52:04.716"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.613" endtime="20210401 16:52:04.716"></status>
-</kw>
-<kw name="Input Last Name" library="001_resource">
-<arguments>
-<arg>${LAST NAME}</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="last-name"]</arg>
-<arg>${last_name}</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.718" level="INFO">Typing text 'Sanjaya' into text field '//*[@id="last-name"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.717" endtime="20210401 16:52:04.821"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.717" endtime="20210401 16:52:04.821"></status>
-</kw>
-<kw name="Input Postal Code Name" library="001_resource">
-<arguments>
-<arg>${POSTAL CODE}</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="postal-code"]</arg>
-<arg>${postal_code}</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.822" level="INFO">Typing text '11270' into text field '//*[@id="postal-code"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.822" endtime="20210401 16:52:04.912"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.821" endtime="20210401 16:52:04.913"></status>
-</kw>
-<kw name="Click Continue To Purchase item" library="001_resource">
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="checkout_info_container"]/div/form/div[2]/input</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.914" level="INFO">Clicking button '//*[@id="checkout_info_container"]/div/form/div[2]/input'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.914" endtime="20210401 16:52:04.980"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.913" endtime="20210401 16:52:04.980"></status>
-</kw>
-<kw name="CLick Finish Button" library="001_resource">
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="finish"]</arg>
-</arguments>
-<msg timestamp="20210401 16:52:04.982" level="INFO">Clicking element '//*[@id="finish"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:04.982" endtime="20210401 16:52:05.034"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.981" endtime="20210401 16:52:05.034"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:04.612" endtime="20210401 16:52:05.035" critical="yes"></status>
-</test>
-<test id="s1-s2-t4" name="Verify If Checkout Success">
-<kw name="Checkout Complete Page Should Be Open" library="001_resource">
-<kw name="Location Should Be" library="SeleniumLibrary">
-<doc>Verifies that the current URL is exactly ``url``.</doc>
-<arguments>
-<arg>https://www.saucedemo.com/checkout-complete.html</arg>
-</arguments>
-<msg timestamp="20210401 16:52:05.044" level="INFO">Current location is 'https://www.saucedemo.com/checkout-complete.html'.</msg>
-<status status="PASS" starttime="20210401 16:52:05.039" endtime="20210401 16:52:05.045"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:05.038" endtime="20210401 16:52:05.045"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:05.038" endtime="20210401 16:52:05.045" critical="yes"></status>
-</test>
-<doc>Purchasing an item from inventory page</doc>
-<status status="PASS" starttime="20210401 16:52:04.307" endtime="20210401 16:52:05.047"></status>
-</suite>
-<suite id="s1-s3" name="005 Logout" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\005_logout.robot">
-<test id="s1-s3-t1" name="Logout">
-<kw name="Click Burger Menu" library="001_resource">
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="react-burger-menu-btn"]</arg>
-</arguments>
-<msg timestamp="20210401 16:52:05.059" level="INFO">Clicking button '//*[@id="react-burger-menu-btn"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:05.059" endtime="20210401 16:52:05.118"></status>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is visible.</doc>
-<arguments>
-<arg>//*[@id="logout_sidebar_link"]</arg>
-</arguments>
-<status status="PASS" starttime="20210401 16:52:05.118" endtime="20210401 16:52:05.361"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:05.059" endtime="20210401 16:52:05.361"></status>
-</kw>
-<kw name="Click Logout" library="001_resource">
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>//*[@id="logout_sidebar_link"]</arg>
-</arguments>
-<msg timestamp="20210401 16:52:05.363" level="INFO">Clicking element '//*[@id="logout_sidebar_link"]'.</msg>
-<status status="PASS" starttime="20210401 16:52:05.362" endtime="20210401 16:52:05.405"></status>
-</kw>
-<kw name="Location Should Be" library="SeleniumLibrary">
-<doc>Verifies that the current URL is exactly ``url``.</doc>
-<arguments>
-<arg>${URL}</arg>
-</arguments>
-<msg timestamp="20210401 16:52:05.411" level="INFO">Current location is 'https://www.saucedemo.com/'.</msg>
-<status status="PASS" starttime="20210401 16:52:05.405" endtime="20210401 16:52:05.411"></status>
-</kw>
-<status status="PASS" starttime="20210401 16:52:05.362" endtime="20210401 16:52:05.411"></status>
+<status status="PASS" starttime="20210405 17:11:58.663" endtime="20210405 17:11:59.674"></status>
 </kw>
 <kw name="Close Browser" library="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20210401 16:52:05.412" endtime="20210401 16:52:07.829"></status>
+<status status="PASS" starttime="20210405 17:11:59.674" endtime="20210405 17:12:02.051"></status>
 </kw>
-<status status="PASS" starttime="20210401 16:52:05.058" endtime="20210401 16:52:07.829" critical="yes"></status>
+<status status="PASS" starttime="20210405 17:11:54.008" endtime="20210405 17:12:02.051"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Open Saucedemo Website" library="001_resource">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:02.052" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20210405 17:12:02.052" endtime="20210405 17:12:04.464"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20210405 17:12:04.464" endtime="20210405 17:12:04.586"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:02.051" endtime="20210405 17:12:04.586"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Login Template</arg>
+<arg>${data["users"][${i}]["username"]}</arg>
+<arg>${data["users"][${i}]["password"]}</arg>
+<arg>${data["users"][${i}]["error"]}</arg>
+</arguments>
+<kw name="Login Template">
+<arguments>
+<arg>${data["users"][${i}]["username"]}</arg>
+<arg>${data["users"][${i}]["password"]}</arg>
+<arg>${data["users"][${i}]["error"]}</arg>
+</arguments>
+<kw name="Input Username" library="001_resource">
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="user-name"]</arg>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:04.590" level="INFO">Typing text 'standard_user' into text field '//*[@id="user-name"]'.</msg>
+<status status="PASS" starttime="20210405 17:12:04.590" endtime="20210405 17:12:04.700"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.589" endtime="20210405 17:12:04.700"></status>
+</kw>
+<kw name="Input Password" library="001_resource">
+<arguments>
+<arg>${password}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="password"]</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:04.701" level="INFO">Typing text '' into text field '//*[@id="password"]'.</msg>
+<status status="PASS" starttime="20210405 17:12:04.701" endtime="20210405 17:12:04.770"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.700" endtime="20210405 17:12:04.770"></status>
+</kw>
+<kw name="Click Login Button" library="001_resource">
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login-button"]</arg>
+</arguments>
+<msg timestamp="20210405 17:12:04.771" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
+<status status="PASS" starttime="20210405 17:12:04.771" endtime="20210405 17:12:04.825"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.770" endtime="20210405 17:12:04.825"></status>
+</kw>
+<kw name="Login Should Fail">
+<arguments>
+<arg>${error}</arg>
+</arguments>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login_button_container"]/div/form/div[3]/h3</arg>
+</arguments>
+<assign>
+<var>${text}</var>
+</assign>
+<msg timestamp="20210405 17:12:04.850" level="INFO">${text} = Epic sadface: Password is required</msg>
+<status status="PASS" starttime="20210405 17:12:04.826" endtime="20210405 17:12:04.850"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${msg}</arg>
+<arg>${text}</arg>
+</arguments>
+<status status="PASS" starttime="20210405 17:12:04.850" endtime="20210405 17:12:04.850"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.825" endtime="20210405 17:12:04.851"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.587" endtime="20210405 17:12:04.851"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.586" endtime="20210405 17:12:04.851"></status>
+</kw>
+<kw name="Sleep Saucedemo Website">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1s</arg>
+</arguments>
+<msg timestamp="20210405 17:12:05.853" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20210405 17:12:04.851" endtime="20210405 17:12:05.853"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:04.851" endtime="20210405 17:12:05.853"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20210405 17:12:05.854" endtime="20210405 17:12:07.954"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:02.051" endtime="20210405 17:12:07.954"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Open Saucedemo Website" library="001_resource">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:07.956" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="PASS" starttime="20210405 17:12:07.955" endtime="20210405 17:12:11.067"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20210405 17:12:11.067" endtime="20210405 17:12:11.185"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:07.955" endtime="20210405 17:12:11.185"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Login Template</arg>
+<arg>${data["users"][${i}]["username"]}</arg>
+<arg>${data["users"][${i}]["password"]}</arg>
+<arg>${data["users"][${i}]["error"]}</arg>
+</arguments>
+<kw name="Login Template">
+<arguments>
+<arg>${data["users"][${i}]["username"]}</arg>
+<arg>${data["users"][${i}]["password"]}</arg>
+<arg>${data["users"][${i}]["error"]}</arg>
+</arguments>
+<kw name="Input Username" library="001_resource">
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="user-name"]</arg>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:11.187" level="INFO">Typing text '' into text field '//*[@id="user-name"]'.</msg>
+<status status="PASS" starttime="20210405 17:12:11.186" endtime="20210405 17:12:11.268"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.186" endtime="20210405 17:12:11.268"></status>
+</kw>
+<kw name="Input Password" library="001_resource">
+<arguments>
+<arg>${password}</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="password"]</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:11.269" level="INFO">Typing text 'secret_sauce' into text field '//*[@id="password"]'.</msg>
+<status status="PASS" starttime="20210405 17:12:11.269" endtime="20210405 17:12:11.364"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.268" endtime="20210405 17:12:11.365"></status>
+</kw>
+<kw name="Click Login Button" library="001_resource">
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login-button"]</arg>
+</arguments>
+<msg timestamp="20210405 17:12:11.365" level="INFO">Clicking button '//*[@id="login-button"]'.</msg>
+<status status="PASS" starttime="20210405 17:12:11.365" endtime="20210405 17:12:11.421"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.365" endtime="20210405 17:12:11.422"></status>
+</kw>
+<kw name="Login Should Fail">
+<arguments>
+<arg>${error}</arg>
+</arguments>
+<kw name="Get Text" library="SeleniumLibrary">
+<doc>Returns the text value of the element identified by ``locator``.</doc>
+<arguments>
+<arg>//*[@id="login_button_container"]/div/form/div[3]/h3</arg>
+</arguments>
+<assign>
+<var>${text}</var>
+</assign>
+<msg timestamp="20210405 17:12:11.444" level="INFO">${text} = Epic sadface: Username is required</msg>
+<status status="PASS" starttime="20210405 17:12:11.422" endtime="20210405 17:12:11.444"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${msg}</arg>
+<arg>${text}</arg>
+</arguments>
+<status status="PASS" starttime="20210405 17:12:11.444" endtime="20210405 17:12:11.445"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.422" endtime="20210405 17:12:11.445"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.185" endtime="20210405 17:12:11.445"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.185" endtime="20210405 17:12:11.445"></status>
+</kw>
+<kw name="Sleep Saucedemo Website">
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1s</arg>
+</arguments>
+<msg timestamp="20210405 17:12:12.451" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20210405 17:12:11.446" endtime="20210405 17:12:12.452"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:11.445" endtime="20210405 17:12:12.453"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20210405 17:12:12.453" endtime="20210405 17:12:14.565"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:07.955" endtime="20210405 17:12:14.565"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:11:54.008" endtime="20210405 17:12:14.565"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:11:54.007" endtime="20210405 17:12:14.565" critical="yes"></status>
 </test>
-<status status="PASS" starttime="20210401 16:52:05.051" endtime="20210401 16:52:07.831"></status>
+<status status="PASS" starttime="20210405 17:11:53.705" endtime="20210405 17:12:14.566"></status>
 </suite>
-<status status="PASS" starttime="20210401 16:51:58.198" endtime="20210401 16:52:07.834"></status>
+<suite id="s1-s2" name="002.2 Invalid Login Db" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\002.2_invalid_login_db.robot">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Connect To Database</arg>
+<arg>pymysql</arg>
+<arg>${db_name}</arg>
+<arg>${db_user}</arg>
+<arg>${db_pasword}</arg>
+<arg>${db_host}</arg>
+<arg>${db_port}</arg>
+<arg>AND</arg>
+<arg>Fetch Data</arg>
+<arg>AND</arg>
+<arg>Row Count In Users Table</arg>
+</arguments>
+<kw name="Connect To Database" library="DatabaseLibrary">
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using `dbName`, `dbUsername`, and `dbPassword`.</doc>
+<arguments>
+<arg>pymysql</arg>
+<arg>${db_name}</arg>
+<arg>${db_user}</arg>
+<arg>${db_pasword}</arg>
+<arg>${db_host}</arg>
+<arg>${db_port}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:14.606" level="INFO">Connecting using : pymysql.connect(db=db_test, user=root, passwd=, host=127.0.0.1, port=3306, charset=None) </msg>
+<status status="PASS" starttime="20210405 17:12:14.587" endtime="20210405 17:12:14.607"></status>
+</kw>
+<kw name="Fetch Data">
+<kw name="Query" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<arguments>
+<arg>select username, password, error from users</arg>
+</arguments>
+<assign>
+<var>${queryResults}</var>
+</assign>
+<msg timestamp="20210405 17:12:14.608" level="INFO">Executing : Query  |  select username, password, error from users </msg>
+<msg timestamp="20210405 17:12:14.609" level="INFO">${queryResults} = (('locked_out_user', 'secret_sauce', 'Epic sadface: Sorry, this user has been locked out.'), ('standard_user', '', 'Epic sadface: Password is required'), ('', 'secret_sauce', 'Epic sadface: Username i...</msg>
+<status status="PASS" starttime="20210405 17:12:14.608" endtime="20210405 17:12:14.609"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${queryResults}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:14.609" level="INFO">${queryResults} = (('locked_out_user', 'secret_sauce', 'Epic sadface: Sorry, this user has been locked out.'), ('standard_user', '', 'Epic sadface: Password is required'), ('', 'secret_sauce', 'Epic sadface: Username i...</msg>
+<status status="PASS" starttime="20210405 17:12:14.609" endtime="20210405 17:12:14.609"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:14.607" endtime="20210405 17:12:14.609"></status>
+</kw>
+<kw name="Row Count In Users Table">
+<kw name="Row Count" library="DatabaseLibrary">
+<doc>Uses the input `selectStatement` to query the database and returns the number of rows from the query. Set
+optional input `sansTran` to True to run command without an explicit transaction commit or rollback.</doc>
+<arguments>
+<arg>select * from users</arg>
+</arguments>
+<assign>
+<var>${lengthOfData}</var>
+</assign>
+<msg timestamp="20210405 17:12:14.610" level="INFO">Executing : Row Count  |  select * from users </msg>
+<msg timestamp="20210405 17:12:14.610" level="INFO">${lengthOfData} = 3</msg>
+<status status="PASS" starttime="20210405 17:12:14.610" endtime="20210405 17:12:14.611"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${lengthOfData}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:14.611" level="INFO">${lengthOfData} = 3</msg>
+<status status="PASS" starttime="20210405 17:12:14.611" endtime="20210405 17:12:14.611"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:14.609" endtime="20210405 17:12:14.611"></status>
+</kw>
+<status status="PASS" starttime="20210405 17:12:14.587" endtime="20210405 17:12:14.611"></status>
+</kw>
+<test id="s1-s2-t1" name="Check Login For Invalid Crendential From Database">
+<kw name="${i} IN RANGE [ ${lengthOfData} ]" type="for">
+<kw name="${i} = 0" type="foritem">
+<kw name="Open Saucedemo Website" library="001_resource">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20210405 17:12:14.613" level="INFO">Opening browser 'chrome' to base url 'https://www.saucedemo.com/'.</msg>
+<status status="FAIL" starttime="20210405 17:12:14.612" endtime="20210405 17:12:19.241"></status>
+</kw>
+<status status="FAIL" starttime="20210405 17:12:14.612" endtime="20210405 17:12:19.242"></status>
+</kw>
+<status status="FAIL" starttime="20210405 17:12:14.612" endtime="20210405 17:12:19.242"></status>
+</kw>
+<status status="FAIL" starttime="20210405 17:12:14.612" endtime="20210405 17:12:19.242"></status>
+</kw>
+<status status="FAIL" starttime="20210405 17:12:14.611" endtime="20210405 17:12:19.242" critical="yes">Execution terminated by signal</status>
+</test>
+<kw name="Disconnect From Database" library="DatabaseLibrary" type="teardown">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20210405 17:12:19.243" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20210405 17:12:19.243" endtime="20210405 17:12:19.244"></status>
+</kw>
+<status status="FAIL" starttime="20210405 17:12:14.567" endtime="20210405 17:12:19.244"></status>
+</suite>
+<suite id="s1-s3" name="002 Invalid Login" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\002_invalid_login.robot">
+<test id="s1-s3-t1" name="Check Login For Invalid Crendential">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.246" endtime="20210405 17:12:19.247" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<doc>Test and verify if login is invalid</doc>
+<status status="FAIL" starttime="20210405 17:12:19.245" endtime="20210405 17:12:19.248"></status>
+</suite>
+<suite id="s1-s4" name="003 Valid Login" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\003_valid_login.robot">
+<test id="s1-s4-t1" name="Check Login for valid Crendential">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.249" endtime="20210405 17:12:19.250" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<doc>verify login in saucedemo website</doc>
+<status status="FAIL" starttime="20210405 17:12:19.249" endtime="20210405 17:12:19.250"></status>
+</suite>
+<suite id="s1-s5" name="004 Order Item" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\004_order_item.robot">
+<test id="s1-s5-t1" name="Adding The Most Expensive item To Cart">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.251" endtime="20210405 17:12:19.252" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-s5-t2" name="Checkout Cart">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.252" endtime="20210405 17:12:19.252" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-s5-t3" name="Input Valid Information">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.253" endtime="20210405 17:12:19.253" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<test id="s1-s5-t4" name="Verify If Checkout Success">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.253" endtime="20210405 17:12:19.253" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<doc>Purchasing an item from inventory page</doc>
+<status status="FAIL" starttime="20210405 17:12:19.251" endtime="20210405 17:12:19.254"></status>
+</suite>
+<suite id="s1-s6" name="005 Logout" source="C:\Internship\AutomationTesting\SauceDemo\testing_saucedemo\005_logout.robot">
+<test id="s1-s6-t1" name="Logout">
+<tags>
+<tag>robot:exit</tag>
+</tags>
+<status status="FAIL" starttime="20210405 17:12:19.255" endtime="20210405 17:12:19.256" critical="yes">Test execution stopped due to a fatal error.</status>
+</test>
+<status status="FAIL" starttime="20210405 17:12:19.255" endtime="20210405 17:12:19.256"></status>
+</suite>
+<status status="FAIL" starttime="20210405 17:11:53.677" endtime="20210405 17:12:19.257"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="6" fail="0">Critical Tests</stat>
-<stat pass="6" fail="0">All Tests</stat>
+<stat pass="1" fail="8">Critical Tests</stat>
+<stat pass="1" fail="8">All Tests</stat>
 </total>
 <tag>
+<stat pass="1" fail="1" info="combined" combined="NOT robot:exit">NOT robot:exit</stat>
+<stat pass="0" fail="7">robot:exit</stat>
 </tag>
 <suite>
-<stat pass="6" fail="0" id="s1" name="Testing Saucedemo">Testing Saucedemo</stat>
-<stat pass="1" fail="0" id="s1-s1" name="003 Valid Login">Testing Saucedemo.003 Valid Login</stat>
-<stat pass="4" fail="0" id="s1-s2" name="004 Order Item">Testing Saucedemo.004 Order Item</stat>
-<stat pass="1" fail="0" id="s1-s3" name="005 Logout">Testing Saucedemo.005 Logout</stat>
+<stat pass="1" fail="8" id="s1" name="Testing Saucedemo">Testing Saucedemo</stat>
+<stat pass="1" fail="0" id="s1-s1" name="002.1 Invalid Login Json">Testing Saucedemo.002.1 Invalid Login Json</stat>
+<stat pass="0" fail="1" id="s1-s2" name="002.2 Invalid Login Db">Testing Saucedemo.002.2 Invalid Login Db</stat>
+<stat pass="0" fail="1" id="s1-s3" name="002 Invalid Login">Testing Saucedemo.002 Invalid Login</stat>
+<stat pass="0" fail="1" id="s1-s4" name="003 Valid Login">Testing Saucedemo.003 Valid Login</stat>
+<stat pass="0" fail="4" id="s1-s5" name="004 Order Item">Testing Saucedemo.004 Order Item</stat>
+<stat pass="0" fail="1" id="s1-s6" name="005 Logout">Testing Saucedemo.005 Logout</stat>
 </suite>
 </statistics>
 <errors>
