@@ -11,7 +11,6 @@ Check Login For Invalid Crendential From Json File
 ...         Login Template  ${data["users"][${i}]["username"]}  
 ...                         ${data["users"][${i}]["password"]}     
 ...                         ${data["users"][${i}]["error"]}
-            Sleep Saucedemo Website
             Close Browser
     END
 
@@ -24,10 +23,7 @@ Json File
     ${lengthOfData}=  Get length      ${data["users"]}
     Set Global Variable         ${data}
     Set Global Variable         ${lengthOfData}
-
-Sleep Saucedemo Website
-    Sleep   1s
-
+    
 Login Template
     [Arguments]     ${username}     ${password}     ${error}
     Input Username      ${username}

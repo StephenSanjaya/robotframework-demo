@@ -24,7 +24,6 @@ Check Login For Invalid Crendential From Database
 ...         Login Template  ${queryResults[${i}][0]}
 ...                         ${queryResults[${i}][1]}     
 ...                         ${queryResults[${i}][2]}
-            Sleep Saucedemo Website
             Close Browser
     END
     
