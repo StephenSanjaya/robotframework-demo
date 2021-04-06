@@ -13,10 +13,6 @@ ${db_host}          127.0.0.1
 ${db_port}          3306
 
 *** Test Cases ***
-# Create Table
-#     Create Users Table
-#     Insert Multiple Data Into Users Table
-
 Check Login For Invalid Crendential From Database
     FOR    ${i}    IN RANGE     ${lengthOfData}
             Open Saucedemo Website
